@@ -1,5 +1,5 @@
 {
-  description = "Lumen desktop shell (Phase 1)";
+  description = "Lumen desktop shell (Phase 2)";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   inputs.quickshell-mcp.url = "github:franklinnolasco7/quickshell-mcp";
@@ -41,7 +41,7 @@
         in {
           inherit lumen lumen-shell;
           default = pkgs.symlinkJoin {
-             name = "lumen-phase1";
+              name = "lumen-phase2";
             paths = [ lumen lumen-shell units ];
           };
         });

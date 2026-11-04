@@ -1,5 +1,5 @@
 [Unit]
-Description=Lumen Quickshell status
+Description=Lumen Quickshell status, askpass and PolicyKit agent
 PartOf=graphical-session.target
 After=lumen.service
 Wants=lumen.service

@@ -4,7 +4,7 @@ Modular Linux desktop shell: **niri** + **Quickshell**, a Rust session daemon (m
 
 *Lumen* — Latin for light; D-Bus namespace `org.lumen`.
 
-> **Status:** Phase 1 auth broker implemented; TTY/tmux and GUI sudo paths user-tested; SSH and security acceptance tests remain. See [docs/ROADMAP.md](docs/ROADMAP.md).
+> **Status:** Phase 1 auth broker and Phase 2 Quickshell Polkit agent implemented; Polkit authentication user-tested with `pkexec`, with remaining acceptance checks pending. See [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Goals
 
@@ -85,3 +85,7 @@ sudo -A -k true
 ```
 
 The TTY (if present) and Quickshell password dialog race; the first submission is returned to sudo. The daemon does **not** verify the password: sudo does. A GUI-only session works when the shell is healthy; without either channel the request fails immediately. No secret is placed in subprocess argv or environment. For headless SSH/tmux, start the daemon in that user's session bus and use a controlling TTY. `bash scripts/auth-smoke.sh` runs isolated D-Bus smoke checks without sudo or a desktop. Configuration and limitations: [Phase 1](docs/phases/01-askpass.md).
+
+## Phase 2: PolicyKit agent
+
+`lumen-shell` also registers a Polkit agent for its graphical logind session. It shows the action, identity, and PAM prompt in a Quickshell dialog; Cancel rejects, and Polkit (not Lumen's askpass broker) validates responses. Only one agent can register per session. If another agent is active, disable its autostart before launching Lumen to use the Lumen dialog. Test instructions and outstanding live checks: [Phase 2](docs/phases/02-polkit.md).
