@@ -1,5 +1,5 @@
 {
-  description = "Lumen desktop shell (Phase 0)";
+  description = "Lumen desktop shell (Phase 1)";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   inputs.quickshell-mcp.url = "github:franklinnolasco7/quickshell-mcp";
@@ -28,7 +28,7 @@
               cp shell.qml $out/share/lumen/shell.qml
               makeWrapper ${pkgs.quickshell}/bin/quickshell $out/bin/lumen-shell \
                 --add-flags "--path $out/share/lumen/shell.qml" \
-                --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.systemd ]}
+                --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.systemd lumen ]}
             '';
           };
           units = pkgs.runCommand "lumen-user-units" { } ''
@@ -41,7 +41,7 @@
         in {
           inherit lumen lumen-shell;
           default = pkgs.symlinkJoin {
-            name = "lumen-phase0";
+             name = "lumen-phase1";
             paths = [ lumen lumen-shell units ];
           };
         });

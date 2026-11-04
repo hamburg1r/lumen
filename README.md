@@ -4,7 +4,7 @@ Modular Linux desktop shell: **niri** + **Quickshell**, a Rust session daemon (m
 
 *Lumen* — Latin for light; D-Bus namespace `org.lumen`.
 
-> **Status:** Phase 0 skeleton implemented; later phases are still plans. See [docs/ROADMAP.md](docs/ROADMAP.md).
+> **Status:** Phase 1 auth broker implemented; TTY/tmux and GUI sudo paths user-tested; SSH and security acceptance tests remain. See [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Goals
 
@@ -28,8 +28,8 @@ Modular Linux desktop shell: **niri** + **Quickshell**, a Rust session daemon (m
 lumen/
   docs/           architecture, roadmap, ADRs, phase checklists
   compositor/     niri launch snippet
-  shell/          Quickshell status stub
-  daemon/         Rust lumen daemon (Ping only)
+  shell/          Quickshell status and askpass dialog
+  daemon/         Rust lumen daemon and auth client helpers
   modules/        feature backends (e.g. ytmusicd)
   systemd/user/   user unit templates (packaged with store paths)
   scripts/        helpers
@@ -74,3 +74,14 @@ busctl --user call org.lumen /org/lumen org.lumen.Daemon Ping  # s "pong"
 The shell displays **Lumen connected** or **Lumen disconnected** and updates within two seconds of a daemon state change. To install both commands in your profile: `nix profile install .#default`. The individual outputs are `.#lumen` and `.#lumen-shell`; `nix develop` provides the development tools.
 
 For startup, choose **one** of: merge [compositor/niri.kdl](compositor/niri.kdl) into your niri config (after installing the package into your profile), or link the packaged units from `result/share/systemd/user/` with `systemctl --user link` and enable them. See [Phase 0](docs/phases/00-skeleton.md) for details and tests. Do not use both startup mechanisms at once.
+
+## Phase 1: sudo askpass
+
+Start `lumen` and `lumen-shell` in the same graphical session, then:
+
+```sh
+export SUDO_ASKPASS="$(readlink -f result)/bin/lumen-askpass"
+sudo -A -k true
+```
+
+The TTY (if present) and Quickshell password dialog race; the first submission is returned to sudo. The daemon does **not** verify the password: sudo does. A GUI-only session works when the shell is healthy; without either channel the request fails immediately. No secret is placed in subprocess argv or environment. For headless SSH/tmux, start the daemon in that user's session bus and use a controlling TTY. `bash scripts/auth-smoke.sh` runs isolated D-Bus smoke checks without sudo or a desktop. Configuration and limitations: [Phase 1](docs/phases/01-askpass.md).

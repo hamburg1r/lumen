@@ -18,7 +18,7 @@ Pointers: [ARCHITECTURE.md](ARCHITECTURE.md) · [DECISIONS.md](DECISIONS.md) · 
 | 7 | Hardening | Creds, docs, optional shared cache rules |
 | 8 | URL dispatch & receiver | Handler picker + remote URL/file intake (Termux) |
 
-**Current progress:** Phase 0 is implemented and locally verified (including the Nix flake); Phases 1–8 remain unimplemented. See [Phase 0 verification](phases/00-skeleton.md#verification-performed).
+**Current progress:** Phase 0 verified; Phase 1 implemented with local D-Bus/PTY smoke tests and user-tested sudo in TTY/tmux and GUI. SSH, cross-UID, and remaining acceptance tests are pending. Phases 2–8 remain unimplemented. See [Phase 1](phases/01-askpass.md).
 
 ## Phase 0 — Skeleton
 
