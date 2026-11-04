@@ -1,0 +1,9 @@
+[package]
+name = "lumen"
+version = "0.1.0"
+edition = "2021"
+description = "Lumen session daemon"
+license = "MIT"
+
+[dependencies]
+zbus = { version = "5", features = ["blocking"] }

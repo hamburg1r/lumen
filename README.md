@@ -4,7 +4,7 @@ Modular Linux desktop shell: **niri** + **Quickshell**, a Rust session daemon (m
 
 *Lumen* — Latin for light; D-Bus namespace `org.lumen`.
 
-> **Status:** early design. See [docs/DECISIONS.md](docs/DECISIONS.md).
+> **Status:** Phase 0 skeleton implemented; later phases are still plans. See [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Goals
 
@@ -27,11 +27,11 @@ Modular Linux desktop shell: **niri** + **Quickshell**, a Rust session daemon (m
 ```text
 lumen/
   docs/           architecture, roadmap, ADRs, phase checklists
-  compositor/     niri config snippets
-  shell/          Quickshell UI (placeholder)
-  daemon/         Rust workspace for lumen + lumen-askpass (placeholder)
+  compositor/     niri launch snippet
+  shell/          Quickshell status stub
+  daemon/         Rust lumen daemon (Ping only)
   modules/        feature backends (e.g. ytmusicd)
-  systemd/user/   user unit templates
+  systemd/user/   user unit templates (packaged with store paths)
   scripts/        helpers
 ```
 
@@ -60,10 +60,17 @@ lumen/
 | Audio out | PipeWire (user session) |
 | IPC | session D-Bus (`org.lumen.*`) |
 
-## Getting started
+## Phase 0: build and run
 
-Nothing to build yet. Read `docs/ROADMAP.md` Phase 0 when ready.
+Linux + Nix with flakes enabled and a running session D-Bus are required. Quickshell needs a Wayland session to show its status indicator.
 
 ```bash
-cd ~/repo/lumen
+nix build .#default                  # packages lumen, lumen-shell, and user units
+./result/bin/lumen &                 # terminal 1 (or foreground in a separate terminal)
+busctl --user call org.lumen /org/lumen org.lumen.Daemon Ping  # s "pong"
+./result/bin/lumen-shell             # in a niri/Wayland session
 ```
+
+The shell displays **Lumen connected** or **Lumen disconnected** and updates within two seconds of a daemon state change. To install both commands in your profile: `nix profile install .#default`. The individual outputs are `.#lumen` and `.#lumen-shell`; `nix develop` provides the development tools.
+
+For startup, choose **one** of: merge [compositor/niri.kdl](compositor/niri.kdl) into your niri config (after installing the package into your profile), or link the packaged units from `result/share/systemd/user/` with `systemctl --user link` and enable them. See [Phase 0](docs/phases/00-skeleton.md) for details and tests. Do not use both startup mechanisms at once.

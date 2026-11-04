@@ -1,0 +1,12 @@
+[Unit]
+Description=Lumen session daemon
+PartOf=graphical-session.target
+After=dbus.socket
+
+[Service]
+Type=simple
+ExecStart=@LUMEN@
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

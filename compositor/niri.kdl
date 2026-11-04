@@ -1,0 +1,4 @@
+// Merge these lines into ~/.config/niri/config.kdl (do not replace existing config).
+// If niri is launched with --session, systemd user units can start the pieces instead.
+spawn-at-startup "lumen"
+spawn-at-startup "lumen-shell"

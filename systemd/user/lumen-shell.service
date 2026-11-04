@@ -1,0 +1,13 @@
+[Unit]
+Description=Lumen Quickshell status
+PartOf=graphical-session.target
+After=lumen.service
+Wants=lumen.service
+
+[Service]
+Type=simple
+ExecStart=@LUMEN_SHELL@
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

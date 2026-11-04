@@ -18,6 +18,8 @@ Pointers: [ARCHITECTURE.md](ARCHITECTURE.md) · [DECISIONS.md](DECISIONS.md) · 
 | 7 | Hardening | Creds, docs, optional shared cache rules |
 | 8 | URL dispatch & receiver | Handler picker + remote URL/file intake (Termux) |
 
+**Current progress:** Phase 0 is implemented and locally verified (including the Nix flake); Phases 1–8 remain unimplemented. See [Phase 0 verification](phases/00-skeleton.md#verification-performed).
+
 ## Phase 0 — Skeleton
 
 **Checklist:** [phases/00-skeleton.md](phases/00-skeleton.md)
