@@ -1,5 +1,5 @@
 {
-  description = "Lumen desktop shell (Phase 2)";
+  description = "Lumen desktop shell (Phase 3)";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   inputs.quickshell-mcp.url = "github:franklinnolasco7/quickshell-mcp";
@@ -25,10 +25,10 @@
             dontBuild = true;
             installPhase = ''
               mkdir -p $out/bin $out/share/lumen
-              cp shell.qml $out/share/lumen/shell.qml
+              cp shell.qml chrome.py $out/share/lumen/
               makeWrapper ${pkgs.quickshell}/bin/quickshell $out/bin/lumen-shell \
                 --add-flags "--path $out/share/lumen/shell.qml" \
-                --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.systemd lumen ]}
+                --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.systemd pkgs.python3 pkgs.niri pkgs.fuzzel pkgs.wireplumber pkgs.brightnessctl lumen ]}
             '';
           };
           units = pkgs.runCommand "lumen-user-units" { } ''
@@ -41,7 +41,7 @@
         in {
           inherit lumen lumen-shell;
           default = pkgs.symlinkJoin {
-              name = "lumen-phase2";
+            name = "lumen-phase3";
             paths = [ lumen lumen-shell units ];
           };
         });

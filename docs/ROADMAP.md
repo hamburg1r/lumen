@@ -18,7 +18,7 @@ Pointers: [ARCHITECTURE.md](ARCHITECTURE.md) · [DECISIONS.md](DECISIONS.md) · 
 | 7 | Hardening | Creds, docs, optional shared cache rules |
 | 8 | URL dispatch & receiver | Handler picker + remote URL/file intake (Termux) |
 
-**Current progress:** Phase 0 verified; Phase 1 implemented with local D-Bus/PTY smoke tests and user-tested sudo in TTY/tmux and GUI (SSH, cross-UID, and other acceptance checks pending). Phase 2 implemented using Quickshell's Polkit agent; `pkexec` authentication, Cancel, and wrong-password retry user-tested; cross-session check remains. Phases 3–8 remain unimplemented. See [Phase 1](phases/01-askpass.md) and [Phase 2](phases/02-polkit.md).
+**Current progress:** Phase 0 verified; Phase 1 implemented with local D-Bus/PTY smoke tests and user-tested sudo in TTY/tmux and GUI (SSH, cross-UID, and other acceptance checks pending). Phase 2 implemented using Quickshell's Polkit agent; `pkexec` authentication, Cancel, and wrong-password retry user-tested; cross-session check remains. Phase 3 shell chrome accepted, with transparency/namespaces chosen instead of blur and brightness OSD waived on hardware without a backlight. Phases 4–8 remain unimplemented. See [Phase 1](phases/01-askpass.md), [Phase 2](phases/02-polkit.md), and [Phase 3](phases/03-shell-chrome.md).
 
 ## Phase 0 — Skeleton
 

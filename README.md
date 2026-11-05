@@ -4,7 +4,7 @@ Modular Linux desktop shell: **niri** + **Quickshell**, a Rust session daemon (m
 
 *Lumen* — Latin for light; D-Bus namespace `org.lumen`.
 
-> **Status:** Phase 1 auth broker and Phase 2 Quickshell Polkit agent implemented; Polkit authentication user-tested with `pkexec`, with remaining acceptance checks pending. See [docs/ROADMAP.md](docs/ROADMAP.md).
+> **Status:** Phase 3 shell chrome accepted (brightness OSD waived on hardware without a backlight); Phase 1 and 2 have separate outstanding checks. See [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Goals
 
@@ -28,7 +28,8 @@ Modular Linux desktop shell: **niri** + **Quickshell**, a Rust session daemon (m
 lumen/
   docs/           architecture, roadmap, ADRs, phase checklists
   compositor/     niri launch snippet
-  shell/          Quickshell status and askpass dialog
+  shell/          Quickshell bar, telemetry adapter and auth dialogs
+  home-manager/   Theme/module option mapping to TOML
   daemon/         Rust lumen daemon and auth client helpers
   modules/        feature backends (e.g. ytmusicd)
   systemd/user/   user unit templates (packaged with store paths)
